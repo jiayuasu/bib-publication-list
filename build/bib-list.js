@@ -897,7 +897,11 @@ function BibTex(options)
 		'phdthesis',
 		'proceedings',
 		'techreport',
-		'unpublished'
+		'unpublished',
+        'demo',
+        'tutorial',
+        'workshop',
+        'abstract'
 	);
 	this.authorstring = 'VON LAST, JR, FIRST';
     
@@ -2677,6 +2681,31 @@ var bibtexify = (function($) {
                 (entryData.publisher?entryData.publisher + ". ":"") +
                 (entryData.note?entryData.note:"");
         },
+        demo: function(entryData) {
+            return this.authors2html(entryData.author) + " (" + entryData.year + "). " +
+                entryData.title + ". In <em>" + entryData.booktitle +
+                ", pp. " + entryData.pages +
+                ((entryData.address)?", " + entryData.address:"") + ".<\/em>";
+        },
+        tutorial: function(entryData) {
+            return this.authors2html(entryData.author) + " (" + entryData.year + "). " +
+                entryData.title + ". In <em>" + entryData.booktitle +
+                ", pp. " + entryData.pages +
+                ((entryData.address)?", " + entryData.address:"") + ".<\/em>";
+        },
+        workshop: function(entryData) {
+            return this.authors2html(entryData.author) + " (" + entryData.year + "). " +
+                entryData.title + ". In <em>" + entryData.booktitle +
+                ", pp. " + entryData.pages +
+                ((entryData.address)?", " + entryData.address:"") + ".<\/em>";
+        }, 
+        abstract: function(entryData) {
+            return this.authors2html(entryData.author) + " (" + entryData.year + "). " +
+                entryData.title + ". <em>" + entryData.journal + ", " + entryData.volume +
+                ((entryData.number)?"(" + entryData.number + ")":"")+ ", " +
+                "pp. " + entryData.pages + ". " +
+                ((entryData.address)?entryData.address + ".":"") + "<\/em>";
+        },                
         // weights of the different types of entries; used when sorting
         importance: {
             'TITLE': 9999,
@@ -2693,7 +2722,11 @@ var bibtexify = (function($) {
             'inbook': 100,
             'proceedings': 105,
             'book': 110,
-            'unpublished': 120
+            'unpublished': 120,
+            'demo': 106,
+            'tutorial': 107,
+            'workshop': 108,
+            'abstract':109
         },
         // labels used for the different types of entries
         labels: {
@@ -2709,7 +2742,12 @@ var bibtexify = (function($) {
             'phdthesis': 'PhD Thesis',
             'proceedings': 'Conference proceeding',
             'techreport': 'Technical report',
-            'unpublished': 'Unpublished'}
+            'unpublished': 'Unpublished',
+            'demo': 'Demonstration',
+            'tutorial': 'Tutorial',
+            'workshop': 'Workshop',
+            'abstract': 'Abstract'
+        }
     };
     // format a phd thesis similarly to masters thesis
     bib2html.phdthesis = bib2html.mastersthesis;
